@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="task">
+
+    <select id="selectTaskList" resultType="gu.project.TaskVO" parameterType="String">
+        SELECT PRNO, TSNO, TSPARENT, TSSORT, TSTITLE, TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE
+        	 , GETCOLOR4ALERT (TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE) STATUSCOLOR
+		     , (SELECT GROUP_CONCAT(USERNO) FROM PRJ_TASKUSER WHERE TSNO=PT.TSNO) USERNO
+			 , (SELECT GROUP_CONCAT(USERNM) FROM PRJ_TASKUSER PTU, COM_USER CU WHERE TSNO=PT.TSNO AND PTU.USERNO=CU.USERNO) USERNM
+          FROM PRJ_TASK PT
+         WHERE PT.DELETEFLAG='N' AND PRNO=#{pjno}
+         ORDER BY TSNO 
+    </select> 
+
+    <select id="selectTaskWorkerList" resultType="gu.project.TaskVO" parameterType="String">
+        SELECT PRNO, PTU.USERNO, PT.TSNO, TSPARENT, TSSORT, TSTITLE, TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE
+        	 , GETCOLOR4ALERT (TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE) STATUSCOLOR
+			 , USERNM
+          FROM PRJ_TASK PT
+         INNER JOIN PRJ_TASKUSER PTU ON PTU.TSNO=PT.TSNO
+         INNER JOIN  COM_USER CU ON PTU.USERNO=CU.USERNO
+         WHERE PT.DELETEFLAG='N' AND PRNO=#{pjno}
+         ORDER BY PTU.USERNO, TSNO 
+    </select> 
+            
+    <insert id="insertTask" parameterType="gu.project.TaskVO" useGeneratedKeys="true" keyProperty="tsno">
+        INSERT INTO PRJ_TASK(PRNO, TSPARENT, TSSORT, TSTITLE,  TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE, DELETEFLAG)
+        VALUES (#{prno}, #{tsparent}, #{tssort}, #{tstitle}, #{ tsstartdate}, #{tsenddate},  #{tsendreal},#{tsrate}, 'N')
+    </insert>
+    
+    <update id="updateTask" parameterType="gu.project.TaskVO">
+        UPDATE PRJ_TASK
+           SET TSTITLE=#{tstitle}
+             , TSSTARTDATE=#{tsstartdate} 
+             , TSENDDATE=#{tsenddate}
+             , TSENDREAL=#{tsendreal}
+             , TSRATE=#{tsrate}
+         WHERE DELETEFLAG='N'
+           AND TSNO=#{tsno}
+    </update> 
+    
+    <select id="selectTaskOne" resultType="gu.project.TaskVO" parameterType="String">
+        SELECT PRNO, TSNO, TSPARENT, TSSORT, TSTITLE, TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE 
+        	 , GETCOLOR4ALERT (TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE) STATUSCOLOR
+		     , (SELECT GROUP_CONCAT(USERNO) FROM PRJ_TASKUSER WHERE TSNO=PT.TSNO) USERNO
+			 , (SELECT GROUP_CONCAT(USERNM) FROM PRJ_TASKUSER PTU, COM_USER CU WHERE TSNO=PT.TSNO AND PTU.USERNO=CU.USERNO) USERNM
+          FROM PRJ_TASK PT
+        WHERE PT.DELETEFLAG='N' AND TSNO=#{tsno}
+    </select> 
+            
+    <delete id="deleteTaskOne" parameterType="String">
+        UPDATE PRJ_TASK
+           SET DELETEFLAG='Y'
+         WHERE TSNO=#{tsno}
+    </delete> 
+    
+    <delete id="deleteTaskUser" parameterType="String" >
+    	DELETE FROM PRJ_TASKUSER WHERE TSNO = #{tsno}
+	</delete>
+	
+    <insert id="insertTaskUser" parameterType="gu.common.Field3VO" >
+        INSERT INTO PRJ_TASKUSER(TSNO, USERNO)
+        VALUES (#{field1}, #{field2})
+    </insert>
+
+</mapper>
+

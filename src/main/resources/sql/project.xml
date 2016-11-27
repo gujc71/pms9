@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+    <sql id="includeProject">
+        WHERE PP.DELETEFLAG='N' 
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectProjectCount" resultType="Integer" parameterType="gu.common.SearchVO">
+        SELECT COUNT(*)
+          FROM PRJ_PROJECT PP
+         <include refid="includeProject"/>
+    </select> 
+    
+    <select id="selectProjectList" resultType="gu.project.ProjectVO" parameterType="gu.common.SearchVO">
+        SELECT PRNO, PRTITLE, PRDATE, PRSTARTDATE, PRENDDATE
+             , PP.USERNO, USERNM, CODENM AS PRSTATUS
+          FROM PRJ_PROJECT PP
+         INNER JOIN COM_USER CU ON PP.USERNO=CU.USERNO
+         INNER JOIN COM_CODE CC ON PP.PRSTATUS=CC.CODECD
+         <include refid="includeProject"/>
+           AND CC.CLASSNO=2
+         ORDER BY PRNO DESC 
+         <if test="rowStart != null">
+             LIMIT ${rowStart-1}, 10
+         </if>
+    </select> 
+        
+    <insert id="insertProject" parameterType="gu.project.ProjectVO" >
+        INSERT INTO PRJ_PROJECT(PRTITLE, PRSTARTDATE, PRENDDATE, PRDATE, USERNO, PRSTATUS, DELETEFLAG)
+        VALUES (#{prtitle}, #{prstartdate}, #{prenddate}, now(), #{userno}, '0', 'N')
+    </insert>
+    
+    <update id="updateProject" parameterType="gu.project.ProjectVO">
+        UPDATE PRJ_PROJECT
+           SET PRTITLE=#{prtitle}
+             , PRSTATUS=#{prstatus}
+             , PRSTARTDATE=#{prstartdate} 
+             , PRENDDATE=#{prenddate}
+         WHERE DELETEFLAG='N'
+           AND PRNO=#{prno}
+    </update> 
+        
+    <select id="selectProjectOne" parameterType="String" resultType="gu.project.ProjectVO">
+        SELECT PRNO, PRTITLE, PRDATE, PRSTARTDATE, PRENDDATE
+             , PP.USERNO, USERNM, PRSTATUS
+          FROM PRJ_PROJECT PP
+         INNER JOIN COM_USER CU ON PP.USERNO=CU.USERNO
+         WHERE PP.DELETEFLAG='N'
+           AND PRNO=#{field1}
+    </select> 
+    
+    <select id="selectProjectAuthChk" parameterType="gu.project.ProjectVO" resultType="String">
+        SELECT PRNO
+          FROM PRJ_PROJECT
+         WHERE DELETEFLAG='N'
+           AND PRNO=#{prno} AND USERNO=#{userno}
+    </select> 
+
+    <delete id="deleteProjectOne" parameterType="String">
+        UPDATE PRJ_PROJECT
+           SET DELETEFLAG='Y'
+         WHERE PRNO=#{prno}
+    </delete> 
+    
+
+</mapper>
+

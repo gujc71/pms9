@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="taskMine">
+
+    <select id="selectTaskMineList" resultType="gu.project.TaskVO" parameterType="gu.common.Field3VO">
+        SELECT PRNO, PT.TSNO, TSPARENT, TSSORT, TSTITLE, TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE
+        	 , GETCOLOR4ALERT (TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE) STATUSCOLOR
+			 , (SELECT GROUP_CONCAT(USERNM) FROM PRJ_TASKUSER PTU, COM_USER CU WHERE TSNO=PT.TSNO AND PTU.USERNO=CU.USERNO) USERNM
+          FROM PRJ_TASK PT
+         INNER JOIN PRJ_TASKUSER PTU ON PTU.TSNO=PT.TSNO 
+         WHERE PT.DELETEFLAG='N' AND PRNO=#{field1} AND PTU.USERNO=#{field2}
+         ORDER BY TSNO 
+    </select> 
+        
+    <update id="updateTaskMine" parameterType="gu.project.TaskVO">
+        UPDATE PRJ_TASK
+           SET TSRATE=#{tsrate}
+         WHERE DELETEFLAG='N'
+           AND TSNO=#{tsno}
+    </update> 
+    
+    <select id="selectTaskMineOne" resultType="gu.project.TaskVO" parameterType="String">
+        SELECT PRNO, TSNO, TSPARENT, TSSORT, TSTITLE, TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE 
+        	 , GETCOLOR4ALERT (TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE) STATUSCOLOR
+		     , (SELECT GROUP_CONCAT(USERNO) FROM PRJ_TASKUSER WHERE TSNO=PT.TSNO) USERNO
+			 , (SELECT GROUP_CONCAT(USERNM) FROM PRJ_TASKUSER PTU, COM_USER CU WHERE TSNO=PT.TSNO AND PTU.USERNO=CU.USERNO) USERNM
+          FROM PRJ_TASK PT
+        WHERE PT.DELETEFLAG='N' AND TSNO=#{tsno}
+    </select> 
+
+    <!-- =============================================================================== -->
+    <select id="selectTaskFileList" resultType="gu.common.FileVO" parameterType="String">
+        SELECT FILENO, FILENAME, REALNAME, FILESIZE
+          FROM PRJ_TASKFILE
+         WHERE TSNO=#{brdno}
+         ORDER BY FILENO DESC 
+    </select> 
+
+    <insert id="insertTaskFile" parameterType="gu.common.FileVO" >
+        INSERT INTO PRJ_TASKFILE (TSNO, FILENAME, REALNAME, FILESIZE)
+        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize})
+    </insert>
+    <delete id="deleteTaskFile" parameterType="hashmap"> 
+        DELETE 
+          FROM PRJ_TASKFILE
+         WHERE FILENO IN (
+              <foreach item="item" index="index" collection="fileno" separator=",">
+                     ${item}
+              </foreach>  
+        )             
+    </delete> 
+                
+</mapper>
+
