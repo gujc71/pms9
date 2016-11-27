@@ -199,3 +199,40 @@ BEGIN
       
 RETURN ret_;
 END
+
+DELIMITER $$
+
+CREATE DEFINER=`gujc`@`%` FUNCTION `getColor4Alert`(tsstartdate_ VARCHAR(10), tsenddate_ VARCHAR(10), tsendreal_ VARCHAR(10), tsrate_ Integer) RETURNS varchar(10) CHARSET utf8
+BEGIN
+    DECLARE bgcolor_ VARCHAR(10);
+    DECLARE today_ Datetime;
+/*  
+  오늘 날짜가 시작일자보다 작으면 회색
+  오늘 날짜가 종료일자를 지났으면 빨강
+  오늘 날짜가 주어진 기간의 50% 미만이면 녹색
+  오늘 날짜가 주어진 기간의 50% 이상이면 노랑
+  진행율이 기간내에 100이 되었으면 녹색, 지난뒤에 100이면 검정색
+*/    
+    SET today_ := now();
+    SET bgcolor_ := 'gray'; -- tsstartdate < today
+    
+    IF tsrate_ < 100 THEN
+        IF tsstartdate_ > today_ THEN
+            SET bgcolor_ := 'gray';
+        ELSEIF tsenddate_ < today_ THEN
+            SET bgcolor_ := 'red';
+        ELSEIF TIMESTAMPDIFF(DAY, tsstartdate_, today_) < TIMESTAMPDIFF(DAY, today_, tsenddate_) THEN
+            SET bgcolor_ := 'green';
+        ELSEIF TIMESTAMPDIFF(DAY, tsstartdate_, today_) >= TIMESTAMPDIFF(DAY, today_, tsenddate_) THEN
+            SET bgcolor_ := 'yellow';
+        END IF;
+    ELSE
+        IF tsendreal_!="" AND tsendreal_ <= tsenddate_ THEN
+            SET bgcolor_ := 'green';
+        ELSE
+            SET bgcolor_ := 'orange';
+        END IF;
+    END IF;
+
+RETURN bgcolor_;
+END

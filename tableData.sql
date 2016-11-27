@@ -1,7 +1,9 @@
 INSERT INTO `com_code` (`CLASSNO`, `CODECD`, `CODENM`) VALUES
 	(1, 'A', '관리자'),
-	(1, 'U', '사용자');
-
+	(1, 'U', '사용자'),
+    (2, '0', '진행중'),
+    (2, '1', '종료');
+        
 INSERT INTO `com_dept` (`DEPTNO`, `DEPTNM`, `PARENTNO`, `DELETEFLAG`) VALUES
 	(1, '주식회사', NULL, 'N'),
 	(2, '기획실', 1, 'N'),
