@@ -103,7 +103,7 @@ function fn_formSubmit(){
 	                    </div>
 	                </div>
 			        <button class="btn btn-outline btn-primary"><i class="fa fa-save fa-fw"></i><s:message code="common.btnSave"/></button>
-			        <c:if test="${projectInfo.prstatus==0}">
+			        <c:if test="${projectInfo.prno!=null}">
 		         		<button type="button" class="btn btn-default" onclick="fn_moveToURL('projectDelete?prno=<c:out value="${projectInfo.prno}"/>')"><i class="fa fa-minus fa-fw"></i><s:message code="common.btnDelete"/></button>
 		         	</c:if>    
 					<input type="hidden" name="prno" value="<c:out value="${projectInfo.prno}"/>"> 

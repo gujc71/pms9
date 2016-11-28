@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import gu.common.Field3VO;
 import gu.common.SearchVO;
 import gu.common.Util4calen;
 import gu.etc.EtcSvc;
@@ -64,7 +63,8 @@ public class ProjectCtr {
             String today = Util4calen.date2Str(Util4calen.getToday());
             projectInfo = new ProjectVO();
             projectInfo.setPrstartdate(today);            
-            projectInfo.setPrenddate(today);            
+            projectInfo.setPrenddate(today);
+            projectInfo.setPrstatus("0");
         }
         
         modelMap.addAttribute("projectInfo", projectInfo);

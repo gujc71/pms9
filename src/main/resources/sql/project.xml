@@ -28,7 +28,7 @@
            AND CC.CLASSNO=2
          ORDER BY PRNO DESC 
          <if test="rowStart != null">
-             LIMIT ${rowStart-1}, 10
+             LIMIT ${rowStart-1}, ${displayRowCount}
          </if>
     </select> 
         

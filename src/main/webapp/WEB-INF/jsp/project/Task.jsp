@@ -153,9 +153,9 @@ function save(){
 	node.tsparent=parentId;
 	$.ajax({
 		url : "taskSave",
-		cache : false,
-		dataType : "json",
-		data : node
+		type: "post",
+		dataType: "json",
+		data: node
 	}).done(function(data){
 		if (node.id !== "N") return;
 		$('#tg').treegrid('update', {

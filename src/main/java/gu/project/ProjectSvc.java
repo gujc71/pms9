@@ -6,12 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionException;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import gu.common.Field3VO;
 import gu.common.SearchVO;
@@ -21,9 +16,6 @@ public class ProjectSvc {
 
     @Autowired
     private SqlSessionTemplate sqlSession;    
-
-    @Autowired
-    private DataSourceTransactionManager txManager;
 
     static final Logger LOGGER = LoggerFactory.getLogger(ProjectSvc.class);
     

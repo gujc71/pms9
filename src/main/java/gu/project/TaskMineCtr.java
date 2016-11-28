@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import gu.common.Field3VO;
 import gu.common.FileUtil;
 import gu.common.FileVO;
-import gu.common.UtilEtc;
 import gu.etc.EtcSvc;
 
 @Controller 

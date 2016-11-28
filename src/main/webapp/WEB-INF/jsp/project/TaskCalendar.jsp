@@ -98,7 +98,7 @@
             <div class="row">
             	<div class="col-lg-12">
             		<c:out value="${projectInfo.prtitle}"/> ( <c:out value="${projectInfo.prstartdate}"/> ~ <c:out value="${projectInfo.prenddate}"/>)
-            		<c:if test="projectInfo.userno==sessionScope.userno">
+            		<c:if test="${projectInfo.userno==sessionScope.userno}">
             			<a href="projectForm?prno=<c:out value="${projectInfo.prno}"/>"><i class="fa fa-edit fa-fw" title="<s:message code="common.btnUpdate"/>"></i></a>
             		</c:if>
 				</div>

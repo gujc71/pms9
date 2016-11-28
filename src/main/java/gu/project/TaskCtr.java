@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import gu.common.Field3VO;
 import gu.common.UtilEtc;
 import gu.etc.EtcSvc;
 

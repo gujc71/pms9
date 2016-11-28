@@ -261,7 +261,7 @@ function fn_addBoardLike(brdno){
 										<div> 
 											<c:out value="${replylist.rewriter}"/> <c:out value="${replylist.redate}"/>
 											<c:if test='${replylist.userno==sessionScope.userno}' >
-												<a href="javascript:fn_replyDelete('<c:out value="${replylist.reno}"/>')" title="<s:message code="common.btnDelete"/>" ><span class="text-muted"><i class="fa fa-times fa-fw"></i></span></span></a>
+												<a href="javascript:fn_replyDelete('<c:out value="${replylist.reno}"/>')" title="<s:message code="common.btnDelete"/>" ><span class="text-muted"><i class="fa fa-times fa-fw"></i></span></a>
 												<a href="javascript:fn_replyUpdate('<c:out value="${replylist.reno}"/>')" title="<s:message code="common.btnUpdate"/>" ><span class="text-muted"><i class="fa fa-edit fa-fw"></i></span></a>
 											</c:if>
 											<a href="javascript:fn_replyReply('<c:out value="${replylist.reno}"/>')" title="<s:message code="common.btnReply"/>" ><span class="text-muted"><i class="fa fa-comments fa-fw"></i></span></a>
