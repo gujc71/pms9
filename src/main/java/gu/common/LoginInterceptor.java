@@ -23,11 +23,11 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
         HttpSession session = req.getSession();
         
-        session.setAttribute("userid", "admin");
+        /*session.setAttribute("userid", "admin");
         session.setAttribute("userrole", "A");        
         session.setAttribute("userno",   "1");        
         session.setAttribute("usernm", "관리자");
-       
+       */
         
         try {
             if (session == null || session.getAttribute("userno") == null) {
