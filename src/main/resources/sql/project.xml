@@ -70,5 +70,20 @@
     </delete> 
     
 
+    <insert id="taskCopy_step1" parameterType="gu.common.Field3VO">
+		INSERT INTO PRJ_TASK(PRNO, TSPARENT, TSTITLE, TSSTARTDATE, TSENDDATE, TSENDREAL, TSRATE, DELETEFLAG, OLDNO)
+			SELECT #{field2}, TSPARENT, TSTITLE, TSSTARTDATE, TSENDDATE, NULL, 0, 'N', TSNO
+			FROM PRJ_TASK
+		    WHERE DELETEFLAG='N' AND PRNO=#{field1}
+	</insert>
+	
+    <update id="taskCopy_step2" parameterType="String">
+		UPDATE PRJ_TASK PT1 
+		 INNER JOIN PRJ_TASK PT2 ON PT2.PRNO=PT1.PRNO AND PT2.OLDNO=PT1.TSPARENT
+		   SET PT1.TSPARENT=PT2.TSNO 
+		 WHERE PT1.DELETEFLAG='N' AND PT1.PRNO=#{prno}
+		   AND PT2.DELETEFLAG='N' AND PT2.PRNO=#{prno}
+	</update>    
+    
 </mapper>
 

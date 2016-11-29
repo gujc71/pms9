@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import gu.common.Field3VO;
 import gu.common.UtilEtc;
 import gu.etc.EtcSvc;
 
@@ -131,5 +132,19 @@ public class TaskCtr {
         modelMap.addAttribute("taskInfo", taskInfo);
 
         return "project/TaskCalenPopup";
-    }    
+    }
+    
+    /**
+     * Task복사.
+     */
+    @RequestMapping(value = "/taskCopy")
+    public String taskCopy(HttpServletRequest request) {
+        String prno = request.getParameter("prno");
+        String srcno = request.getParameter("srcno");
+
+        taskSvc.taskCopy(new Field3VO(srcno, prno, null));
+        
+        return "redirect:/task?prno=" + prno;
+    }
+    
 }

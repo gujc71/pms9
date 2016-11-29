@@ -17,8 +17,6 @@ import gu.project.ProjectSvc;
 @Controller 
 public class IndexCtr {
     @Autowired
-    private IndexSvc indexSvc;
-    @Autowired
     private EtcSvc etcSvc;
     
     @Autowired

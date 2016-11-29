@@ -1370,7 +1370,12 @@
                           <net.java.amateras.db.visual.model.ColumnModel>
                             <columnName>TSNO</columnName>
                             <logicalName>업무번호</logicalName>
-                            <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../../../../../../net.java.amateras.db.visual.model.ForeignKeyModel[5]/source/columns/net.java.amateras.db.visual.model.ColumnModel/columnType"/>
+                            <columnType class="net.java.amateras.db.dialect.ColumnType">
+                              <name>BIGINT</name>
+                              <logicalName>Integer</logicalName>
+                              <supportSize>true</supportSize>
+                              <type>-5</type>
+                            </columnType>
                             <size></size>
                             <notNull>true</notNull>
                             <primaryKey>true</primaryKey>
@@ -1485,6 +1490,17 @@
                               <type>1</type>
                             </columnType>
                             <size>1</size>
+                            <notNull>false</notNull>
+                            <primaryKey>false</primaryKey>
+                            <description></description>
+                            <autoIncrement>false</autoIncrement>
+                            <defaultValue></defaultValue>
+                          </net.java.amateras.db.visual.model.ColumnModel>
+                          <net.java.amateras.db.visual.model.ColumnModel>
+                            <columnName>OLDNO</columnName>
+                            <logicalName>이전업무번호</logicalName>
+                            <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../net.java.amateras.db.visual.model.ColumnModel[2]/columnType"/>
+                            <size></size>
                             <notNull>false</notNull>
                             <primaryKey>false</primaryKey>
                             <description></description>

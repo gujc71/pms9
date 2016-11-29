@@ -121,5 +121,23 @@ public class TaskSvc {
         }  
     }
 
+    /**
+     * TaskMine 복사.
+     */
+    public void taskCopy(Field3VO param) {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status = txManager.getTransaction(def);
+        
+        try {
+            sqlSession.insert("taskCopy_step1", param);
+            sqlSession.update("taskCopy_step2", param.getField2());   // prno
+            
+            txManager.commit(status);
+        } catch (TransactionException ex) {
+            txManager.rollback(status);
+            LOGGER.error("insertTaskMine");
+        }  
+    }
     
 }

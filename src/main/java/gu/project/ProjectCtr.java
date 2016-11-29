@@ -43,6 +43,19 @@ public class ProjectCtr {
         
         return "project/ProjectList";
     }
+    /**
+     * 리스트 4 Ajax.
+     */
+    @RequestMapping(value = "/projectList4Ajax")
+    public String projectList4Ajax(HttpServletRequest request, SearchVO searchVO, ModelMap modelMap) {
+        searchVO.pageCalculate( projectSvc.selectProjectCount(searchVO) ); // startRow, endRow
+        List<?> listview  = projectSvc.selectProjectList(searchVO);
+        
+        modelMap.addAttribute("searchVO", searchVO);
+        modelMap.addAttribute("listview", listview);
+        
+        return "project/ProjectList4Ajax";
+    }
     
     /** 
      * 쓰기. 

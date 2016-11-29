@@ -275,6 +275,19 @@ function fn_selectUsers(usernos, usernms) {
 
 	$("#popupUsers").modal("hide");
 }
+
+var prno='<c:out value="${prno}" />';
+
+function fn_copyTaskDialog() {
+    $.ajax({
+    	url: "projectList4Ajax",
+		type: "post"    	
+    }).success(function(result){
+    			$("#projectList").html(result);
+		}    		
+    );
+	$("#projectList").modal("show");
+}
 </script>
 		
 </head>
@@ -297,6 +310,7 @@ function fn_selectUsers(usernos, usernms) {
             		<c:out value="${projectInfo.prtitle}"/> ( <c:out value="${projectInfo.prstartdate}"/> ~ <c:out value="${projectInfo.prenddate}"/>)
             		<c:if test="${projectInfo.userno == sessionScope.userno}">
             			<a href="projectForm?prno=<c:out value="${projectInfo.prno}"/>"><i class="fa fa-edit fa-fw" title="<s:message code="common.btnUpdate"/>"></i></a>
+            			<a href="#" onclick="fn_copyTaskDialog()"><i class="fa fa-paste fa-fw" title="<s:message code="project.copy"/>"></i></a>
             		</c:if>
 				</div>
             </div>     
@@ -357,6 +371,9 @@ function fn_selectUsers(usernos, usernms) {
     <!-- /#wrapper -->
     
     <div id="popupUsers" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	</div>
+
+    <div id="projectList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	</div>
     
 </body>
