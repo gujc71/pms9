@@ -70,8 +70,8 @@ function fn_formSubmit(){
 		                            <a href="${link}"><c:out value="${listview.prtitle}"/></a>
 		                        </div>
 		                        <div class="panel-body">
-		                            <p><a href="${link}"><c:out value="${listview.usernm}"/> (<c:out value="${listview.prstatus}"/>) </a></p>
-									<p><a href="${link}"><c:out value="${listview.prstartdate}"/>~<c:out value="${listview.prenddate}"/></a></p>
+		                            <p><c:out value="${listview.usernm}"/> (<c:out value="${listview.prstatus}"/>)</p>
+									<p><c:out value="${listview.prstartdate}"/>~<c:out value="${listview.prenddate}"/></p>
 		                        </div>
 		                    </div>
 		                </div>					
@@ -85,12 +85,6 @@ function fn_formSubmit(){
 					    <jsp:include page="../common/pagingforSubmit.jsp" />
 				    
 						<div class="form-group">
-							<div class="checkbox col-lg-3 pull-left">
-							 	<label class="pull-right">
-		                        	<input type="checkbox" name="searchType" value="prtitle" <c:if test="${fn:indexOf(searchVO.searchType, 'brdtitle')!=-1}">checked="checked"</c:if>/>
-		                        	<s:message code="project.title"/>
-		                        </label>
-		                   </div>
 		                   <div class="input-group custom-search-form col-lg-3">
 	                            <input class="form-control" placeholder="Search..." type="text" name="searchKeyword" 
 	                                	   value='<c:out value="${searchVO.searchKeyword}"/>' >

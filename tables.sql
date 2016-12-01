@@ -20,6 +20,7 @@ CREATE TABLE PRJ_TASK(
 		TSENDDATE                     		VARCHAR(10)	 NULL  COMMENT '종료일자',
 		TSENDREAL                     		VARCHAR(10)	 NULL  COMMENT '종료일자(실제)',
 		TSRATE                        		SMALLINT	 NULL  COMMENT '진행율',
+		OLDNO								BIGINT		 NULL  COMMENT '이전업무번호',
 		DELETEFLAG                    		CHAR(1)		 NULL  COMMENT '삭제',
         PRIMARY KEY (TSNO)
 ) COMMENT='프로젝트 업무';

@@ -31,6 +31,9 @@ public class IndexCtr {
         Integer alertcount = etcSvc.selectAlertCount(userno);
         modelMap.addAttribute("alertcount", alertcount);
         
+        if (!"".equals(searchVO.getSearchKeyword())) {
+        	searchVO.setSearchType("prtitle");
+        }
         searchVO.setDisplayRowCount(12);
         searchVO.pageCalculate( projectSvc.selectProjectCount(searchVO) ); // startRow, endRow
         List<?> listview  = projectSvc.selectProjectList(searchVO);
