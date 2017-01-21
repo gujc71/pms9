@@ -167,6 +167,16 @@ CREATE TABLE COM_LOGINOUT (
   PRIMARY KEY (LNO)
 );
 
+CREATE TABLE TBL_CRUD(
+  CRNO INT NOT NULL AUTO_INCREMENT,	-- 번호
+  CRTITLE  	VARCHAR(255),     		-- 제목
+  USERNO 	INT,            		-- 작성자
+  CRMEMO   	MEDIUMTEXT,				-- 내용
+  CRDATE   	DATETIME,        		-- 작성일자
+  CRDELETEFLAG CHAR(1),     		-- 삭제 여부
+  PRIMARY KEY (CRNO)
+) ;
+
 -- DROP FUNCTION uf_datetime2string;
 
 DELIMITER $$
@@ -203,7 +213,7 @@ END
 
 DELIMITER $$
 
-CREATE DEFINER=`gujc`@`%` FUNCTION `getColor4Alert`(tsstartdate_ VARCHAR(10), tsenddate_ VARCHAR(10), tsendreal_ VARCHAR(10), tsrate_ Integer) RETURNS varchar(10) CHARSET utf8
+CREATE FUNCTION `getColor4Alert`(tsstartdate_ VARCHAR(10), tsenddate_ VARCHAR(10), tsendreal_ VARCHAR(10), tsrate_ Integer) RETURNS varchar(10) CHARSET utf8
 BEGIN
     DECLARE bgcolor_ VARCHAR(10);
     DECLARE today_ Datetime;
